@@ -1,0 +1,64 @@
+Partlist
+
+Exported from tc_breakout.brd at 4/22/21 8:15 AM
+
+EAGLE Version 9.6.2 Copyright (c) 1988-2020 Autodesk, Inc.
+
+Assembly variant: 
+
+Part     Value              Package                              Library             Position (mil)        Orientation
+
+C10      0.1uF              C0603                                rcl                 (650 400)             R0
+C11      0.1uF              C0603                                rcl                 (1100 400)            R0
+C12      0.1uF              C0603                                rcl                 (650 950)             R180
+C13      0.1uF              C0603                                rcl                 (1550 400)            R0
+C14      0.1uF              C0603                                rcl                 (1100 950)            R180
+C15      0.1uF              C0603                                rcl                 (1550 950)            R180
+C22      10µF               0805-NO                              microbuilder        (1580 830)            R270
+C23      0.1uF              C0603                                rcl                 (1775 300)            R0
+C24      0.1uF              C0603                                rcl                 (1325 1050)           R180
+C25      0.1uF              C0603                                rcl                 (875 305)             R0
+C26      0.1uF              C0603                                rcl                 (1325 300)            R0
+C27      0.1uF              C0603                                rcl                 (875 1050)            R180
+C28      0.1uF              C0603                                rcl                 (420 1050)            R180
+C29      1uF                0603-NO                              microbuilder        (1910 840)            R270
+C30      10µF               0805-NO                              microbuilder        (1825 835)            R270
+H1       MOUNT-PAD-ROUND3.0 3,0-PAD                              holes               (200 200)             R0
+H2       MOUNT-PAD-ROUND3.0 3,0-PAD                              holes               (2000 200)            R0
+H3       MOUNT-PAD-ROUND3.0 3,0-PAD                              holes               (200 1150)            R0
+H4       MOUNT-PAD-ROUND3.0 3,0-PAD                              holes               (2000 1150)           R0
+J1       282836-2           CONN_282836-2                        282836-2            (650 200)             MR180
+J2       282836-2           CONN_282836-2                        282836-2            (1100 200)            MR180
+J3       282836-2           CONN_282836-2                        282836-2            (1550 200)            MR180
+J4       282836-2           CONN_282836-2                        282836-2            (650 1150)            MR0
+J5       282836-2           CONN_282836-2                        282836-2            (1100 1150)           MR0
+J12      282836-2           CONN_282836-2                        282836-2            (1550 1150)           MR0
+P2       53398-0510         53398-0510                           con-molex-picoblade (2000 700)            R270
+R13      100                R0603                                rcl                 (550 300)             R0
+R14      100                R0603                                rcl                 (750 300)             R180
+R15      100                R0603                                rcl                 (1000 300)            R0
+R16      100                R0603                                rcl                 (1200 300)            R180
+R17      100                R0603                                rcl                 (1450 300)            R0
+R18      100                R0603                                rcl                 (1650 300)            R180
+R19      100                R0603                                rcl                 (550 1050)            R0
+R20      100                R0603                                rcl                 (750 1050)            R180
+R21      100                R0603                                rcl                 (1000 1050)           R0
+R22      100                R0603                                rcl                 (1200 1050)           R180
+R23      100                R0603                                rcl                 (1650 1050)           R180
+R24      100                R0603                                rcl                 (1450 1050)           R0
+R25      10k                R0603                                rcl                 (1465 565)            R90
+R26      7.87k              R0603                                rcl                 (1545 565)            R90
+R31      10k                R0603                                rcl                 (1920 500)            R90
+R32      4.3k               R0603                                rcl                 (1940 400)            R0
+R35      10k                R0603                                rcl                 (1015 565)            R90
+R36      4.3k               R0603                                rcl                 (1095 565)            R90
+R39      10k                R0603                                rcl                 (655 785)             R270
+R40      2.2k               R0603                                rcl                 (735 785)             R270
+R45      100k               0603-NO                              microbuilder        (1695 745)            R180
+U4       MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (850 500)             R0
+U5       MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (1300 500)            R0
+U7       MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (450 850)             R180
+U8       MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (1350 850)            R180
+U9       MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (1750 500)            R0
+U10      MCP96L00T-E/MX     QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      (900 850)             R180
+U13      SPX3819-3.3        SOT23-5                              microbuilder        (1700 845)            R270
