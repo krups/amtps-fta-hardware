@@ -43,11 +43,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-This document outlines the initial design of electrical hardware that will support the flight test article (FTA) being developed for the NASA Flight Opportunities \textit{Additive Manufacturing of Thermal Protection Systems} (AMTPS) project. This project is a collaboration between several NASA facilities including JSC and Langley as well as other research institutions including the University of Kentucky and Oak Ride National Laboratories. Figure \ref{fig:capsule-overview} shows a general overview of the various components that are  expected to be a part of the flight test article (referred to as 'the capsule') based on current requirements.
+This document outlines the initial design of electrical hardware that will support the flight test article (FTA) being developed for the NASA Flight Opportunities \textit{Additive Manufacturing of Thermal Protection Systems} (AMTPS) project. This project is a collaboration between several NASA facilities including JSC and Langley as well as other research institutions namely the University of Kentucky and Oak Ridge National Laboratories. Figure \ref{fig:capsule-overview} shows a general overview of the various components that are  expected to be a part of the flight test article (referred to as 'the capsule') based on current requirements.
 
-Capsule hardware must be capable of robust data acquisition in order to characterize the thermal, pressure, and overall heating environment of supersonic reentry. In addition to collecting multiple data channels, the hardware must be capable of transmitting its location as it about to touch back down to Earth. The multichannel data acquisition system must also save flight data for analysis after it touches back down. Timing the deployment of a parachute before touchdown is also a requirement of the hardware in order to lessen the force of impact.
+Capsule hardware must be capable of robust data acquisition in order to characterize the thermal, pressure, and overall heating environment of supersonic reentry. In addition to collecting multiple data channels, the hardware must be capable of transmitting its location as it touches back down to Earth. The multichannel data acquisition system must also save flight data for further analysis after it touches back down. Timing the deployment of a parachute before touchdown is also a requirement of the hardware in order to lessen the force of impact.
 
-This document is organized as follows: Section \ref{sec:requirements} discusses needed capabilities set by the NASA project design document (rev. \ddrev ) that are relevant to the avionics hardware. Section \ref{sec:ss-design} displays the preliminary designs and testing hardware for the various subsystems of the capsule. This includes data acquisition, logging, and vehicle-to-ground communication for recovery operations. Appendix \ref{appa} contains schematics for PCBs that have been prototyped. Appendix \ref{appb} contains images of testing hardware that has been developed. 
+This document is organized as follows: Section \ref{sec:requirements} discusses needed capabilities in the form of technical and logistical requirements set by the NASA project design document (rev. \ddrev ). Section \ref{sec:ss-design} displays the preliminary designs and testing hardware for the various subsystems of the capsule. This includes data acquisition, logging, and vehicle-to-ground communication for recovery operations. Section \ref{sec:logistics} contains in-work project considerations as well as an approximate schedule. Appendix \ref{appa} contains schematics for PCBs that have been prototyped. Appendix \ref{appb} contains images of testing hardware that has been developed along with initial experimental results. 
 
 \begin{figure}[h!]
 	\centering
@@ -69,23 +69,30 @@ Based off of the most recent revision (\ddrev) of the flight test requirements d
 \begin{enumerate}
 \item Instrumentation and telemetry
   \begin{enumerate}
-  \item Shall support betwen 8 and 20 thermocouples of varying type
-  \item Shall support up to 6 absolute pressure sensors
-  \item Shall support at least 1 intertial measurement unit (IMU)
-  \item Should support 1 heat flux sensor
-  \item Shall contain a GPS for recovery operations
-  \item Telemetry data shall be collected at a minumum of 10Hz
-  \item Telemetry data shall be stored to onboard nonvolatile memory that will survive landing
-  \item Location telemetry shall be transmitted through a vehicle-to-ground system (e.g. Iridium satellite, Xbee)
+	  \item Shall support betwen 8 and 20 thermocouples of varying type
+	  \item Shall support up to 6 absolute pressure sensors
+	  \item Shall support at least 1 intertial measurement unit (IMU)
+	  \item Should support 1 heat flux sensor
+	  \item Shall contain a GPS for recovery operations, accurate to with 100m
+	  \item Capsule shall contain an internal barometric pressure sensor 
+	  \item Telemetry data shall be collected at a minumum of 10Hz
+	  \item Telemetry data shall be stored to onboard nonvolatile memory that will survive landing
+	  \item Location telemetry shall be transmitted through a vehicle-to-ground system (e.g. Iridium satellite, Xbee)
+	  \item Recovery location should be broadcasted at least once every 5 minutes post-flight
   \end{enumerate}
 \item Activation and flight sequencing
   \begin{enumerate}
-  \item Shall be powered through the duration of the flight
-  \item Shall support continuous operation between -20 deg C and 80 deg C
-  \item Shall support pre-launch activation on the ground; should support low power mode prior to deployment
-  \item Shall detect and/or sense when depoyment has occurred via interfacing with the launch vehicle
-  \item Shall trigger parachute deployment at a specified time.
+	  \item Shall be powered through the duration of the flight
+	  \item Shall support continuous operation between -20 deg C and 80 deg C
+	  \item Shall support pre-launch activation on the ground; should support low power mode prior to deployment
+	  \item Shall detect and/or sense when depoyment has occurred via interfacing with the launch vehicle
+	  \item Shall transmit in-flight telemetry with position information
+	  \item In-flight telemetry should contain capsule velocity 
+	  \item Shall trigger parachute deployment at a specified time
   \end{enumerate}
+\item Physical properties
+\item Shall weigh under or around 0.5kg
+\item Shall cost under \$3,000
 \end{enumerate}
 
 
@@ -101,7 +108,15 @@ Based off of the most recent revision (\ddrev) of the flight test requirements d
 
 \subsection{Main command and data handling}
 
-Using off the shelf processors for convenience, and also to avoid bottlenecks in prototyping due to unpredictable chip shortages. Currently, two development boards from Adafruit are being used to prototyping and are listed below in Table \ref{tab:processors}\footnote{TPM: Temperature and Pressure Measurement}\footnote{CDH: Command and Data Handling}.
+Using off the shelf processors for convenience, and also to avoid bottlenecks in prototyping due to unpredictable chip shortages. Currently, two development boards from Adafruit are being used to prototyping and are listed below in Table \ref{tab:processors}\footnote{TPM: Temperature and Pressure Measurement}\footnote{CDH: Command and Data Handling}. The diagram in Figure \ref{fig:main-overview} provides a general overview of the organization of electronic hardware within the capsule. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{images/amtps-main-system.png}
+	\caption{Main functional components of the capsule and the communication buses between them.}
+	\label{fig:main-overview}
+\end{figure}
+
 
 \begin{table}[h!]	
 	\caption{List of processors used and their capabilities.}
@@ -114,29 +129,17 @@ Using off the shelf processors for convenience, and also to avoid bottlenecks in
 	\label{tab:processors}
 \end{table}
 
-The diagram in Figure \ref{fig:main-overview} provides a general overview of the organization of electronic hardware within the capsule. 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{images/amtps-main-system.png}
-	\caption{Main functional components of the capsule and the communication buses between them.}
-	\label{fig:main-overview}
-\end{figure}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Temperature and Pressure Measurement}
-The temperature and pressure measurement (TPM) Subsystem (TPMS) supports collection of several datapoints needed for recreating the heating environment of reentry. 
-
+The temperature and pressure measurement (TPM) Subsystem (TPMS) supports collection of several datapoints needed for recreating the heating environment of reentry. The diagram in Figure \ref{fig:tpms-overview} shows an overview of the temperature and pressure monitoring subsystem. Images of prototyping the TPMS are shown in  Appendix \ref{appb}.
 
 In order to support the large number of TCs required in the capsule, a breakout board supporting 6 of the MCP9600T-E/MX series TC to digital converter was designed. This TC converter chip was selected due to its support for a wide variety of TC types (K, J, T, N, S, E, B and R)\footnote{\url{https://www.digikey.com/en/products/detail/microchip-technology/MCP96L00T-E-MX/9606988}}, as well as its chainable I$^2$C interface, allowing more sensing elements to connected with less wiring (similar SPI based conversion chips have a chip select line per chip that would restrict the number of pins available for other capsule functionality).
 
-A breakout board was designed with 6 MCP9600 converter chips to serve as an initial design for a t ewill be done on a breakout 
 
+For pressure meausrement, Honeywell sensing solutions temperature compensated absolute digital pressure sensors were selected and are shown in Table \ref{tab:pressure-sensors}. These single port absolute pressure sensors are available with a variety of sensitivities, allowing a different sensor to be exchanged later on in the design process if it is determined that the current predicted pressure environment is no longer accurate.
 
-For pressure meausrement, Honeywell sensing solutions temperature compensated absolution digital pressure sensors were selected and are shown in Table \ref{tab:pressure-sensors}. These single port absolute pressure sensors are available with a variety of sensitivities, allowing a different sensor to be exchanged later on in the design process if it is determined that the current predicted pressure environment is no longer accurate.
-
-A picture of the preliminary pressure sensor evaluative setup in shown in Appendix \ref{appb}, Figure \ref{fig:pressure-testbed}.
 
 \begin{table}[h!]
 	\caption{List of pressure sensors and their capabilities}
@@ -149,12 +152,10 @@ A picture of the preliminary pressure sensor evaluative setup in shown in Append
 \label{tab:pressure-sensors}
 \end{table}
 
-Finally, Figure \ref{fig:tpms-overview} shows an overview of the temperature and pressure monitoring subsystem
-
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/amtps-temp-pressure-subsystem.png}
-	\caption{Overview of the TPMS.}
+	\caption{Functional decomposition of the TPMS.}
 	\label{fig:tpms-overview}
 \end{figure}
 
@@ -173,24 +174,39 @@ Iridium modem to send GPS coordinates for recovery operations. University of Ken
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Storage}
-On board non-volatile storage is required to log in-flight telemetry data for post processing. Due to the high vibrational loads expected during launch, an SD card might be unreliable (spring loaded contacts could separate from card). For this reason, solid state flash integrated circuits are being explored that can store just as much information as an SD card. 
-
-Exporting logged data from the capsule would then be done via cabled connection to a computer after capsule recovery.
+On board non-volatile storage is required to log in-flight telemetry data for post processing. Due to the high vibrational loads expected during launch, an SD card might be unreliable (spring loaded contacts could separate from card). For this reason, solid state flash integrated circuits are being explored that can store just as much information as an SD card. Exporting logged data from the capsule would then be done via cabled connection to a computer after capsule recovery.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Other Considerations}
+\subsection{Power}
+To power the capsule avionics, a lithium polymer battery will be used. Most likely a 2 cell (in series) with a high quality switching step down regulator to provide a 5 volt system bus. A single cell approach (with no 5v regulator) eases charging but might cause system electronics to be unreliable during low battery voltage scenarios. No matter what cell configuration is chosen, a battery protection IC will be used for added safety from shorts and battery depletion.
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Durability}
 Syntactic foam may be used. Consisting of glass microballoons with epoxy resin, it can encase electronics to protect from very high acceleration loads during ascent. Currently working with NASA JSC to get glass microballoons to UK for testing.
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Project Logistics}
+\label{sec:logistics}
 
 \subsection{Cost}
 According the the most recent revision of the project outline, NASA has alotted \$3,000 towards the avionics design. Currently the University of Kentucky has not used any of these funds in the prototyping of capsule hardware.
 
 
-
+\subsection{Schedule}
+Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware over the later half of 2021.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/schedule.png}
+	\caption{Approximate schedule for completion of test hardware.}
+	\label{fig:schedule}
+\end{figure}
 
 
 
@@ -225,7 +241,7 @@ Schematics for the Cortex-M0/M4 development boards are available from the links 
 \end{figure}
 
 
-\section{Testing setup}
+\section{Subsystem Testing}
 \label{appb}
 
 \begin{figure}[H]
@@ -256,7 +272,12 @@ Schematics for the Cortex-M0/M4 development boards are available from the links 
 	\label{fig:pressure-testbed}
 \end{figure}
 
-
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/tvac-20210602-large.png}
+	\caption{Pressure readout from 5 Honeywell sensors over an 8 minute session in a thermal vacuum chamber. Not only were the Honeywell sensors all very close to each other, these values closely matched the pressure readout on the TVAC chamber.}
+	\label{fig:pressure-tvac}
+\end{figure}
 
 
 %\bibliographystyle{plain}
