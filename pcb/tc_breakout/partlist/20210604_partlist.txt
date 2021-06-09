@@ -1,0 +1,65 @@
+Partlist
+
+Exported from tc_breakout.sch at 6/4/21 11:25 AM
+
+EAGLE Version 9.6.2 Copyright (c) 1988-2020 Autodesk, Inc.
+
+Assembly variant: 
+
+Part     Value              Device                    Package                              Library             Sheet
+
+ C10      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C11      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C12      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C13      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C14      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C15      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C22      10µF               CAP_CERAMIC0805-NOOUTLINE 0805-NO                              microbuilder        2
+ C23      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C24      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C25      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C26      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C27      0.1uF              C-EUC0603                 C0603                                rcl                 1
+ C28      0.1uF              C-EUC0603                 C0603                                rcl                 1
+C29      1uF                CAP_CERAMIC0603_NO        0603-NO                              microbuilder        2
+C30      10µF               CAP_CERAMIC0805-NOOUTLINE 0805-NO                              microbuilder        2
+H1       MOUNT-PAD-ROUND3.0 MOUNT-PAD-ROUND3.0        3,0-PAD                              holes               2
+H2       MOUNT-PAD-ROUND3.0 MOUNT-PAD-ROUND3.0        3,0-PAD                              holes               2
+H3       MOUNT-PAD-ROUND3.0 MOUNT-PAD-ROUND3.0        3,0-PAD                              holes               2
+H4       MOUNT-PAD-ROUND3.0 MOUNT-PAD-ROUND3.0        3,0-PAD                              holes               2
+J1       282836-2           282836-2                  CONN_282836-2                        282836-2            1
+J2       282836-2           282836-2                  CONN_282836-2                        282836-2            1
+J3       282836-2           282836-2                  CONN_282836-2                        282836-2            1
+J4       282836-2           282836-2                  CONN_282836-2                        282836-2            1
+J5       282836-2           282836-2                  CONN_282836-2                        282836-2            1
+J12      282836-2           282836-2                  CONN_282836-2                        282836-2            1
+P2       53398-0510         53398-0510                53398-0510                           con-molex-picoblade 2
+P3       53398-0410         53398-0410                53398-0410                           con-molex-picoblade 2
+  R13      100                R-EU_R0603                R0603                                rcl                 1
+  R14      100                R-EU_R0603                R0603                                rcl                 1
+  R15      100                R-EU_R0603                R0603                                rcl                 1
+  R16      100                R-EU_R0603                R0603                                rcl                 1
+ R17      100                R-EU_R0603                R0603                                rcl                 1
+ R18      100                R-EU_R0603                R0603                                rcl                 1
+ R19      100                R-EU_R0603                R0603                                rcl                 1
+ R20      100                R-EU_R0603                R0603                                rcl                 1
+ R21      100                R-EU_R0603                R0603                                rcl                 1
+ R22      100                R-EU_R0603                R0603                                rcl                 1
+ R23      100                R-EU_R0603                R0603                                rcl                 1
+ R24      100                R-EU_R0603                R0603                                rcl                 1
+  R25      10k                R-EU_R0603                R0603                                rcl                 1
+  R26      13k                R-EU_R0603                R0603                                rcl                 1
+  R31      10k                R-EU_R0603                R0603                                rcl                 1
+  R32      7.5k               R-EU_R0603                R0603                                rcl                 1
+  R35      10k                R-EU_R0603                R0603                                rcl                 1
+  R36      4.3k               R-EU_R0603                R0603                                rcl                 1
+  R39      10k                R-EU_R0603                R0603                                rcl                 1
+  R40      2.2k               R-EU_R0603                R0603                                rcl                 1
+  R45      100k               RESISTOR_0603_NOOUT       0603-NO                              microbuilder        2
+U4       MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U5       MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U7       MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U8       MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U9       MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U10      MCP96L00T-E/MX     MCP96L00T-E/MX            QFN65P500X500X100-21N_MCP96L00T-E/MX MCP96L00T-E_MX      1
+U13      SPX3819-3.3        VREG_SOT23-5              SOT23-5                              microbuilder        2
