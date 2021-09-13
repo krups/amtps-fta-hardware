@@ -3,7 +3,7 @@
 
 \title{AMPTS FTA Electronic Hardware Design}
 \author{Matt Ruffner}
-\date{\today\\v1.0}
+\date{\today\\v1.1}
 
 
 \usepackage{url}
@@ -28,10 +28,10 @@
 
 \maketitle
 \begin{center}
-	\includegraphics[width=4cm]{images/ukcoe.png}
-	\includegraphics[width=4cm]{images/upaero-logo.png}
-	\includegraphics[width=2cm]{images/nasa-logo.png}
-	\includegraphics[width=4cm]{images/ornl.pdf}	
+	%\includegraphics[width=4cm]{images/ukcoe.png}
+	%\includegraphics[width=4cm]{images/upaero-logo.png}
+	%\includegraphics[width=2cm]{images/nasa-logo.png}
+	%\includegraphics[width=4cm]{images/ornl.pdf}	
 \end{center}
 \tableofcontents \newpage
 \listoffigures 
@@ -86,7 +86,7 @@ Based off of the most recent revision (\ddrev) of the flight test requirements d
 	  \item Shall be powered through the duration of the flight
 	  \item Shall support continuous operation between -20 deg C and 80 deg C
 	  \item Shall support pre-launch activation on the ground; should support low power mode prior to deployment
-	  \item Shall detect and/or sense when depoyment has occurred via interfacing with the launch vehicle
+	  \item Shall detect and/or sense when deployment has occurred via interfacing with the launch vehicle
 	  \item Shall transmit in-flight telemetry with position information
 	  \item In-flight telemetry should contain capsule velocity 
 	  \item Shall trigger parachute deployment at a specified time
@@ -104,7 +104,7 @@ Based off of the most recent revision (\ddrev) of the flight test requirements d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  DESIGN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preliminary Subsystem Design}
+\section{Subsystem Design}
 \label{sec:ss-design}
 
 \subsection{Main command and data handling}
@@ -172,6 +172,13 @@ In addition to a high-g 3-axis accelerometer, a lower dynamic range 6 axis accel
 
 Iridium modem to send GPS coordinates for recovery operations. University of Kentucky has an Iridium modem available to use, with an account providing message credits. Discussion on the use of this modem is yet to have happened. Additional vehicle-to-ground telemetry would be reassuring as the Iridium network can be unreliable for short periods of time. It is unclear whether this would be achievable with a COTS radio link (such as XBee or LORA) that would not require FCC certification. This requires coordination with launch site for tracking with a directional antenna and other hardware setup. The appeal of the Iridium is we get an email with the GPS coordinates of the capsule and we can tell the recovery crew the location of the capsule from anywhere. 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Parachute Deployment}
+Main parachute deployment will use a CO$_2$ cartridge puncture system which has a servo actuated trigger. Servo control signal pins are allotted on the main CDH processor and configured in software to trigger when necessary. Current plans to decide correct deployment time are to use capsule internal barometric pressure, possibly in combination with one of the external pressure sensors.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Storage}
@@ -190,6 +197,23 @@ To power the capsule avionics, a lithium polymer battery will be used. Most like
 Syntactic foam may be used. Consisting of glass microballoons with epoxy resin, it can encase electronics to protect from very high acceleration loads during ascent. Currently working with NASA JSC to get glass microballoons to UK for testing.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Subsystem Software}
+\label{sec:software}
+
+Capsule operation sequence is planned as follows:
+
+\begin{enumerate}
+	\item Low power state prior to launch
+	\item Activate main operation loop upon separation from launch vehicle
+	\item Begin logging all telemetry to internal storage and periodically transmitting Iridium packets with position and velocity information for recovery operations
+	\item At a specified capsule internal barometric pressure, trigger the CO$_2$ release servo to release the drogue and main parachute.
+\end{enumerate}
+
+Currently, verified functionalities include logging of accelerometer, pressure, thermocouple, and GPS data to internal storage. Next steps include adding sending of Iridium modem packets with current position and velocity as well as integrating the IMU logging functionality (currently waiting on parts to be delivered).
+
+Software for the capsule is under version control at \url{http://github.com/krups/amtps-fta-software}. This is a private repository; if anyone would like access, please send an email to matthew.ruffner@uky.edu with their Github username and they will be given access.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,7 +225,7 @@ According the the most recent revision of the project outline, NASA has alotted 
 
 
 \subsection{Schedule}
-Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware over the later half of 2021.
+Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware over the later half of 2021. The project is current slightly ahead of schedule with subsystem testing occurring roughly a month earlier than expected.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{images/schedule.png}
@@ -244,6 +268,15 @@ Schematics for the Cortex-M0/M4 development boards are available from the links 
 
 \section{Subsystem Testing}
 \label{appb}
+
+Testing hardware is assembled and is currently being used for software development. CAD models of capsule avionics have been integrated into the capsule mechanical CAD (with the exception of wiring) to verify physical fit.  
+
+\begin{figure}[h!]
+	\includegraphics[width=\textwidth]{images/subsystem-hardware.jpg}
+	\caption{Initial build of subsystem testing hardware. Shown here: Top right: 18 temperature and 5 channel TPM subsystem connected to main CDH subsystem (bottom right). SD card logging and GPS receiver and antenna also shown (top left). Bottom left: Iridium satellite modem.}
+	\label{fig:subsystem-hardware}
+\end{figure}
+
 
 \begin{figure}[H]
 	\centering
