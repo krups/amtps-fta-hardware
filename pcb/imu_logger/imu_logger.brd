@@ -172,7 +172,7 @@
 <circle x="2.54" y="2.54" radius="1.27" width="0.0254" layer="20"/>
 <circle x="48.26" y="20.32" radius="1.27" width="0.0254" layer="20"/>
 <circle x="48.26" y="2.54" radius="1.27" width="0.0254" layer="20"/>
-<text x="5.588" y="19.177" size="0.8128" layer="25" font="vector" ratio="9">IMU Logger, AMTPS FTA</text>
+<text x="5.588" y="19.177" size="0.8128" layer="25" font="vector" ratio="9">AMTPS FTA IMU PCB</text>
 <text x="6.604" y="2.667" size="0.8128" layer="25" font="vector" ratio="9">Matt Ruffner, 2021</text>
 <wire x1="44.323" y1="11.557" x2="43.434" y2="11.557" width="0.2032" layer="25"/>
 <wire x1="43.815" y1="11.938" x2="43.815" y2="11.176" width="0.2032" layer="25"/>
