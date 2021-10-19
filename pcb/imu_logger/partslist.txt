@@ -1,0 +1,37 @@
+Partlist
+
+Exported from imu_logger.sch at 10/19/21 1:54 PM
+
+EAGLE Version 9.6.2 Copyright (c) 1988-2020 Autodesk, Inc.
+
+Assembly variant: 
+
+Part     Value              Device             Package                Library             Sheet
+
+C1       0.1uF              C-EUC0603          C0603                  rcl                 1
+C2       1uF                C-EUC0603          C0603                  rcl                 1
+C3       1uF                C-EUC0603          C0603                  rcl                 1
+C4       0.1uF              C-EUC0603          C0603                  rcl                 1
+C5       0.1uF              C-EUC0603          C0603                  rcl                 2
+C6       0.01uF             C-EUC0603          C0603                  rcl                 2
+C7       0.1uF              C-EUC0603          C0603                  rcl                 2
+C8       2.2uF              C-EUC0603          C0603                  rcl                 2
+C15      0.1uF              C-EUC0603          C0603                  rcl                 2
+C16      0.1uF              C-EUC0603          C0603                  rcl                 2
+C17      0.1uF              C-EUC0603          C0603                  rcl                 2
+C18      0.1uF              C-USC0603          C0603                  rcl                 3
+C19      2.2uF              C-USC0603          C0603                  rcl                 3
+C20      0.01uF             C-USC0603          C0603                  rcl                 3
+J1       DM3CS-SF           DM3CS-SF           HRS_DM3CS-SF           DM3CS-SF            1
+JP1                         HEADER-1X16ROUND   1X16_ROUND             microbuilder        1
+JP3                         HEADER-1X12        1X12_ROUND             microbuilder        1
+P1       53398-0310         53398-0310         53398-0310             con-molex-picoblade 1
+R14      2.2k               R-US_R0603         R0603                  rcl                 2
+R15      2.2k               R-US_R0603         R0603                  rcl                 2
+U$1      H3LIS100DL         H3LIS100DL         XDCR_LIS3DHTR          LIS3DHTR            1
+U1       MAX14591ETAT       MAX14591ETAT       SON50P200X200X80-8N    MAX14591ETAT        3
+U2       LP2985IM5-1.8/NOPB LP2985IM5-1.8/NOPB MF05A                  gsynth              3
+U3       MAX14591ETAT       MAX14591ETAT       SON50P200X200X80-8N    MAX14591ETAT        3
+U4       MAX14591ETAT       MAX14591ETAT       SON50P200X200X80-8N    MAX14591ETAT        3
+U5       ICM-20948          ICM-20948          QFN40P300X300X105-25N  ICM-20948           2
+U6       ICM-20789          ICM-20789          PQFN50P400X400X146-24N ICM-20789           2
