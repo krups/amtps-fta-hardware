@@ -1,0 +1,155 @@
+\documentclass[UKenglish]{beamer}
+
+
+\usetheme{UiB}
+
+
+\usepackage[utf8]{inputenx} % For æ, ø, å
+\usepackage{csquotes}       % Quotation marks
+\usepackage{microtype}      % Improved typography
+\usepackage{amssymb}        % Mathematical symbols
+\usepackage{mathtools}      % Mathematical symbols
+\usepackage[absolute, overlay]{textpos} % Arbitrary placement
+\setlength{\TPHorizModule}{\paperwidth} % Textpos units
+\setlength{\TPVertModule}{\paperheight} % Textpos units
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{subcaption}
+\usetikzlibrary{overlay-beamer-styles}  % Overlay effects for TikZ
+\usepackage[ruled,vlined]{algorithm2e}
+
+\author{Matt Ruffner}
+\title{AMPTS FTA Avionics Design}
+%\subtitle{Parzen Windowing}
+
+\newcommand{\ddrev}{E}
+
+\begin{document}
+
+
+\section{Overview}
+% Use
+%
+%     \begin{frame}[allowframebreaks]{Title}
+%
+% if the TOC does not fit one frame.
+\begin{frame}{Table of contents}
+    \tableofcontents[currentsection]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Requirements}
+\label{sec:requirements}
+\hidelogo
+\begin{frame}[allowframebreaks]{Requirements}
+
+	Based on revision (\ddrev) of the flight test requirements document.
+	
+	\begin{enumerate}
+		\item Instrumentation and telemetry
+		\begin{enumerate}
+			\item Shall support betwen 8 and 20 thermocouples of varying type
+			\item Shall support up to 6 absolute pressure sensors
+			\item Shall support at least 1 intertial measurement unit (IMU)
+			\item Should support 1 heat flux sensor
+			\item Shall contain a GPS for recovery operations, accurate to with 100m
+			\item Capsule shall contain an internal barometric pressure sensor 
+			\item Telemetry data shall be collected at a minumum of 10Hz
+			\item Telemetry data shall be stored to onboard nonvolatile memory that will survive landing
+			\item Location telemetry shall be transmitted through a vehicle-to-ground system (e.g. Iridium satellite, Xbee)
+			\item Recovery location should be broadcasted at least once every 5 minutes post-flight
+		\end{enumerate}
+		\item Activation and flight sequencing
+		\begin{enumerate}
+			\item Shall be powered through the duration of the flight
+			\item Shall support continuous operation between -20 deg C and 80 deg C
+			\item Shall support pre-launch activation on the ground; should support low power mode prior to deployment
+			\item Shall detect and/or sense when deployment has occurred via interfacing with the launch vehicle
+			\item Shall transmit in-flight telemetry with position information
+			\item In-flight telemetry should contain capsule velocity 
+			\item Shall trigger parachute deployment at a specified time
+		\end{enumerate}
+		\item Physical properties
+		\item Avionics hardware shall weigh under or around 0.5kg
+		\item Shall cost under \$3,000
+	\end{enumerate}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview}
+\begin{frame}{Overview}
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.9\textwidth]{images/amtps-avionics.png}
+		%\caption{Capsule component overview, showing the various functional blocks.}
+		%\label{fig:capsule-overview}
+	\end{figure}
+	
+	
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Temperature and Pressure Measurement}
+\begin{frame}{Temperature and Pressure Measurement)}
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=\textwidth]{images/amtps-temp-pressure-subsystem.png}
+		%\caption{Functional decomposition of the TPMS.}
+		%\label{fig:tpms-overview}
+	\end{figure}
+	
+	
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Command and Data Handling}
+\begin{frame}{Command and Data Handling}
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=\textwidth]{images/amtps-main-system.png}
+		%\caption{Main functional components of the capsule and the communication buses between them.}
+		%\label{fig:main-overview}
+	\end{figure}
+	
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parachute Control}
+\begin{frame}{Parachute Control}
+	
+	
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parachute Control}
+\begin{frame}{Parachute Control}
+	
+	
+\end{frame}
+
+
+
+
+
+\end{document}
