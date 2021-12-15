@@ -10781,6 +10781,15 @@ USE AT YOUR OWN RISK!&lt;p&gt;
 <plain>
 <text x="48.26" y="116.84" size="1.778" layer="94">BREAKOUTS</text>
 <text x="60.96" y="86.36" size="1.778" layer="94">100g accel</text>
+<text x="165.1" y="83.82" size="3.81" layer="94">CDH connection</text>
+<text x="180.34" y="165.1" size="3.81" layer="94">SD card</text>
+<text x="27.94" y="170.18" size="3.81" layer="94">Feather M0 Connection (SAMD21)</text>
+<text x="40.64" y="91.44" size="3.81" layer="94">H3LIS100 high g accel </text>
+<wire x1="0" y1="106.68" x2="0" y2="104.14" width="0.3048" layer="94"/>
+<wire x1="0" y1="104.14" x2="147.32" y2="104.14" width="0.3048" layer="94"/>
+<wire x1="147.32" y1="104.14" x2="248.92" y2="104.14" width="0.3048" layer="94"/>
+<wire x1="147.32" y1="104.14" x2="147.32" y2="185.42" width="0.3048" layer="94"/>
+<wire x1="147.32" y1="104.14" x2="147.32" y2="0" width="0.3048" layer="94"/>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="68.58" y="63.5" smashed="yes"/>
@@ -11182,6 +11191,9 @@ USE AT YOUR OWN RISK!&lt;p&gt;
 </sheet>
 <sheet>
 <plain>
+<text x="22.86" y="175.26" size="3.81" layer="94">Dual IMU to maximize part availability (one or both may be populated)</text>
+<text x="96.52" y="165.1" size="3.81" layer="94">ICM-20948</text>
+<text x="142.24" y="99.06" size="3.81" layer="94">ICM-20789</text>
 </plain>
 <instances>
 <instance part="U5" gate="G$1" x="106.68" y="142.24" smashed="yes">
@@ -11442,6 +11454,9 @@ USE AT YOUR OWN RISK!&lt;p&gt;
 </sheet>
 <sheet>
 <plain>
+<text x="96.52" y="167.64" size="3.81" layer="94">Level shifting</text>
+<text x="35.56" y="63.5" size="3.81" layer="94">1.8v regulator</text>
+<wire x1="248.92" y1="101.6" x2="0" y2="101.6" width="0.508" layer="94"/>
 </plain>
 <instances>
 <instance part="C18" gate="G$1" x="15.24" y="35.56" smashed="yes">

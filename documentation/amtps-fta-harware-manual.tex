@@ -1,9 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{AMPTS FTA Electronic Hardware Design}
+\title{AMPTS FTA Avionics Design}
 \author{Matt Ruffner}
-\date{\today\\v1.1}
+\date{\today\\v1.2}
 
 
 \usepackage{url}
@@ -124,7 +124,7 @@ Using off the shelf processors for convenience, and also to avoid bottlenecks in
 	\begin{tabular}{l | c c m{5cm}}
 		Part & Description & Role & Product Link \\
 		\hline
-		Feather M0 Basic Proto & Cortex-M0 @ 48 MHz & TPM Processor & \url{https://www.adafruit.com/product/2772}\\
+		(2) Feather M0 Basic Proto & Cortex-M0 @ 48 MHz & TPM and IMU processor & \url{https://www.adafruit.com/product/2772}\\
 		Feather M4 Express & Cortex-M4 @ 120Mhz & CDH Processor & \url{https://www.adafruit.com/product/3857} 
 	\end{tabular}
 	\label{tab:processors}
@@ -248,22 +248,101 @@ Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluat
 \section{Schematics}
 \label{appa}
 
-\subsection{Command and Data Handling}
-Schematics for the Cortex-M0/M4 development boards are available from the links provided to the Adafruit product pages.
 
-\subsection{TC breakout board}
+\subsection{Pre-made processor breakout boards}
+For the TPM board, CDH board, and IMU logger board, existing processor breakouts will be used due to shortages of bare chips.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/adafruit_featherm4_schematic}
+	\caption{Feather M4 Express schematic, used in the main CDH board.}
+	\label{fig:schematic-featherm4}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/adafruit_featherm0_schematic}
+	\caption{Feather M0 schematic, used in the IMU logger and TPM boards.}
+	\label{fig:schematic-featherm0}
+\end{figure}
 
+
+
+\newpage
+\subsection{TC to Digital Schematics}
+Figures \ref{fig:schematic-tc-breakout-p1} and \ref{fig:schematic-tc-breakout-p2} show the schematics of the 6 channel TC to digital converter breakout board.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{images/tc-breakout-p1}
+	\caption{TC to digital schematics, page 1/2}
 	\label{fig:schematic-tc-breakout-p1}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{images/tc-breakout-p2}
+	\caption{TC to digital schematics, page 2/2}
 	\label{fig:schematic-tc-breakout-p2}
 \end{figure}
+
+
+
+\newpage
+\subsection{Main CDH Schematics}
+Figures \ref{fig:schematic-cdh-p1} and \ref{fig:schematic-cdh-p2} show the schematics of the main CDH PCB.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/main_board_schem_1}
+	\caption{Main CDH schematics, page 1/2}
+	\label{fig:schematic-cdh-p1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/main_board_schem_2}
+	\caption{Main CDH schematics, page 2/2}
+	\label{fig:schematic-cdh-p2}
+\end{figure}
+
+
+\newpage
+\subsection{TPM Schematics}
+Figures \ref{fig:schematic-tpm-p1} and \ref{fig:schematic-tpm-p2} show the schematics of the TPM subsystem PCB.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/tpms_breakout_schem_1}
+	\caption{TPM schematics, page 1/2}
+	\label{fig:schematic-tpm-p1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/tpms_breakout_schem_2}
+	\caption{TPM schematics, page 2/2}
+	\label{fig:schematic-tpm-p2}
+\end{figure}
+
+
+\newpage
+\subsection{IMU Logger Schematics}
+Figures \ref{fig:schematic-imu-p1}, \ref{fig:schematic-imu-p2}, and \ref{fig:schematic-imu-p3} show the schematics of the IMU logger PCB.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/imu_logger_schem_1}
+	\caption{IMU logger schematics, page 1/3}
+	\label{fig:schematic-imu-p1}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/imu_logger_schem_2}
+	\caption{IMU logger schematics, page 2/3}
+	\label{fig:schematic-imu-p2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/imu_logger_schem_3}
+	\caption{Page 3/3}
+	\label{fig:schematic-imu-p3}
+\end{figure}
+
+
+
 
 
 \section{Subsystem Testing}
