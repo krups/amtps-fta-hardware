@@ -1,43 +1,49 @@
 Partlist
 
-Exported from main_board.sch at 10/19/21 1:54 PM
+Exported from main_board.sch at 12/15/21 12:45 AM
 
 EAGLE Version 9.6.2 Copyright (c) 1988-2020 Autodesk, Inc.
 
 Assembly variant: 
 
-Part      Value                        Device                       Package      Library             Sheet
+Part      Value                    Device                    Package                      Library             Sheet
 
-C1        0.1uF                        C-EUC0603                    C0603        rcl                 2
-C2        0.1uF                        C-EUC0603                    C0603        rcl                 2
-C02_SERVO 53398-0310                   53398-0310                   53398-0310   con-molex-picoblade 2
-C3        0.1uF                        C-EUC0603                    C0603        rcl                 2
-C4        0.1uF                        C-EUC0603                    C0603        rcl                 2
-C5        0.1uF                        C-USC0603                    C0603        adafruit            2
-C14       0.1uF                        C-USC0603                    C0603        adafruit            2
-C22       10µF                         CAP_CERAMIC0805-NOOUTLINE    0805-NO      microbuilder        1
-C29       1uF                          CAP_CERAMIC0603_NO           0603-NO      microbuilder        1
-C30       10µF                         CAP_CERAMIC0805-NOOUTLINE    0805-NO      microbuilder        1
-CHG+ACT   53398-0310                   53398-0310                   53398-0310   con-molex-picoblade 2
-GPS       53398-0410                   53398-0410                   53398-0410   con-molex-picoblade 2
-H1        MOUNT-PAD-ROUND2.8           MOUNT-PAD-ROUND2.8           2,8-PAD      holes               2
-H2        MOUNT-PAD-ROUND2.8           MOUNT-PAD-ROUND2.8           2,8-PAD      holes               2
-H3        MOUNT-PAD-ROUND2.8           MOUNT-PAD-ROUND2.8           2,8-PAD      holes               2
-H4        MOUNT-PAD-ROUND2.8           MOUNT-PAD-ROUND2.8           2,8-PAD      holes               2
-I2C       53398-0410                   53398-0410                   53398-0410   con-molex-picoblade 2
-IMU       53398-0310                   53398-0310                   53398-0310   con-molex-picoblade 2
-IRIDIUM   53398-0410                   53398-0410                   53398-0410   con-molex-picoblade 2
-JP1                                    HEADER-1X16ROUND             1X16_ROUND   microbuilder        1
-JP3                                    HEADER-1X12                  1X12_ROUND   microbuilder        1
-PYRO      53398-0210                   53398-0210                   53398-0210   con-molex-picoblade 2
-PYRO_BAT  53398-0210                   53398-0210                   53398-0210   con-molex-picoblade 2
-R1        288                          R-US_R0603                   R0603        adafruit            2
-R3        288                          R-US_R0603                   R0603        adafruit            2
-R45       100k                         RESISTOR_0603_NOOUT          0603-NO      microbuilder        1
-SD_CARD   DM3CS-SF                     DM3CS-SF                     HRS_DM3CS-SF DM3CS-SF            1
-TELEM     53398-0510                   53398-0510                   53398-0510   con-molex-picoblade 2
-TPMS      53398-0610                   53398-0610                   53398-0610   con-molex-picoblade 2
-U$1       AQV252GA                     AQV252GA                     DIP6         TI_radio            2
-U$7       AQV252GA                     AQV252GA                     DIP6         TI_radio            2
-U1        ADM3101EARQZ-REELRQ_16_ADI-L ADM3101EARQZ-REELRQ_16_ADI-L RQ_16_ADI-L  ADM310              2
-U13       SPX3819-3.3                  VREG_SOT23-5                 SOT23-5      microbuilder        1
+C02_SERVO 53398-0310               53398-0310                53398-0310                   con-molex-picoblade 1
+C5        0.1uF                    C-USC0603                 C0603                        adafruit            1
+C6        0.1uF                    C-EUC0603                 C0603                        rcl                 1
+C7        0.1uF                    C-EUC0603                 C0603                        rcl                 1
+C8        0.1uF                    C-EUC0603                 C0603                        rcl                 1
+C9        0.1uF                    C-EUC0603                 C0603                        rcl                 1
+C14       0.1uF                    C-USC0603                 C0603                        adafruit            1
+C22       10µF                     CAP_CERAMIC0805-NOOUTLINE 0805-NO                      microbuilder        2
+C29       1uF                      CAP_CERAMIC0603_NO        0603-NO                      microbuilder        2
+C30       10µF                     CAP_CERAMIC0805-NOOUTLINE 0805-NO                      microbuilder        2
+CHG+ACT   53398-0310               53398-0310                53398-0310                   con-molex-picoblade 1
+GPS       53398-0410               53398-0410                53398-0410                   con-molex-picoblade 1
+H1        MOUNT-PAD-ROUND2.8       MOUNT-PAD-ROUND2.8        2,8-PAD                      holes               1
+H2        MOUNT-PAD-ROUND2.8       MOUNT-PAD-ROUND2.8        2,8-PAD                      holes               1
+H3        MOUNT-PAD-ROUND2.8       MOUNT-PAD-ROUND2.8        2,8-PAD                      holes               1
+H4        MOUNT-PAD-ROUND2.8       MOUNT-PAD-ROUND2.8        2,8-PAD                      holes               1
+I2C       53398-0410               53398-0410                53398-0410                   con-molex-picoblade 1
+IMU       53398-0310               53398-0310                53398-0310                   con-molex-picoblade 1
+IRIDIUM   53398-0410               53398-0410                53398-0410                   con-molex-picoblade 1
+J1        MEM2067-02-180-00-A_REVB MEM2067-02-180-00-A_REVB  GCT_MEM2067-02-180-00-A_REVB MEM20267            2
+JMP1      0R-JUMPA                 0R-JUMPA                  A0R-JMP                      jump-0r-smd         1
+JP1                                HEADER-1X16ROUND          1X16_ROUND                   microbuilder        2
+JP3                                HEADER-1X12               1X12_ROUND                   microbuilder        2
+PYRO      53398-0210               53398-0210                53398-0210                   con-molex-picoblade 1
+PYRO_BAT  53398-0210               53398-0210                53398-0210                   con-molex-picoblade 1
+R1        288                      R-US_R0603                R0603                        adafruit            1
+R2        288                      R-US_R0603                R0603                        adafruit            1
+R3        288                      R-US_R0603                R0603                        adafruit            1
+R4        288                      R-US_R0603                R0603                        adafruit            1
+R45       100k                     RESISTOR_0603_NOOUT       0603-NO                      microbuilder        2
+SJ1                                SJ                        SJ                           jumper              1
+TELEM     53398-0510               53398-0510                53398-0510                   con-molex-picoblade 1
+TPMS      53398-0610               53398-0610                53398-0610                   con-molex-picoblade 1
+U$1       AQV252GA                 AQV252GA                  DIP6                         TI_radio            1
+U$2       UM3232EEAE               UM3232EEAE                RQ_16_ADI                    ADM310              1
+U$7       AQV252GA                 AQV252GA                  DIP6                         TI_radio            1
+U2        SSM6J414TU               SSM6J414TU                UF6_TOS                      ssm6j414tu          1
+U3        SSM6J414TU               SSM6J414TU                UF6_TOS                      ssm6j414tu          1
+U13       SPX3819-3.3              VREG_SOT23-5              SOT23-5                      microbuilder        2
