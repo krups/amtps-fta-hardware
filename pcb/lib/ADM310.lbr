@@ -591,6 +591,7 @@
 </devices>
 </deviceset>
 <deviceset name="UM3232EEAE">
+<description>Single Supply RS-232 Transceivers</description>
 <gates>
 <gate name="G$1" symbol="UM3232EEAE" x="0" y="0"/>
 </gates>
@@ -615,7 +616,9 @@
 <connect gate="G$1" pin="VCC" pad="16"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="LINK" value="https://www.digikey.com/en/products/detail/union-semiconductor-hk-limited/UM3232EEAE/13926063" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
