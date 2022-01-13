@@ -48,7 +48,7 @@ This document outlines the initial design of electrical hardware that will suppo
 
 Capsule hardware must be capable of robust data acquisition in order to characterize the thermal, pressure, and overall heating environment of supersonic reentry. In addition to collecting multiple data channels, the hardware must be capable of transmitting its location as it touches back down to Earth. The multichannel data acquisition system must also save flight data for further analysis after it touches back down. Timing the deployment of a parachute before touchdown is also a requirement of the hardware in order to lessen the force of impact.
 
-This document is organized as follows: Section \ref{sec:requirements} discusses needed capabilities in the form of technical and logistical requirements set by the NASA project design document (rev. \ddrev ). Section \ref{sec:ss-design} displays the preliminary designs and testing hardware for the various subsystems of the capsule. This includes data acquisition, logging, and vehicle-to-ground communication for recovery operations. Section \ref{sec:logistics} contains in-work project considerations as well as an approximate schedule. Appendix \ref{appa} contains schematics for PCBs that have been prototyped. Appendix \ref{appb} contains images of testing hardware that has been developed along with initial experimental results. 
+This document is organized as follows: Section \ref{sec:requirements} discusses needed capabilities in the form of technical and logistical requirements set by the NASA project design document (rev. \ddrev ). Section \ref{sec:ss-design} displays the electronic hardware designs for subsystems of the capsule. This includes data acquisition, logging, and vehicle-to-ground communication for recovery operations. Secion \ref{sec:software} discusses software functionality and test plans, while Section \ref{sec:testplans} discusses testing for the rest of the hardware and capsule as a whole. Section \ref{sec:logistics} contains in-work project considerations as well as an approximate schedule. Appendix \ref{appa} contains schematics for PCBs that have been prototyped.  
 
 \begin{figure}[h!]
 	\centering
@@ -130,11 +130,19 @@ Using off the shelf processors for convenience, and also to avoid bottlenecks in
 	\label{tab:processors}
 \end{table}
 
+Shown in Fig. \ref{fig:cdh-prototype} is the assembled prototype of the main board.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=10cm]{images/main-board}
+	\caption{Assembled CDH main board.}
+	\label{fig:cdh-prototype}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Temperature and Pressure Measurement}
-The temperature and pressure measurement (TPM) Subsystem (TPMS) supports collection of several datapoints needed for recreating the heating environment of reentry. The diagram in Figure \ref{fig:tpms-overview} shows an overview of the temperature and pressure monitoring subsystem. Images of prototyping the TPMS are shown in  Appendix \ref{appb}.
+The temperature and pressure measurement (TPM) Subsystem (TPMS) supports collection of several datapoints needed for recreating the heating environment of reentry. The diagram in Figure \ref{fig:tpms-overview} shows an overview of the temperature and pressure monitoring subsystem. Images of the TC to digital breakout and TPMS interface boards are shown in Figs. \ref{fig:tpms-proto} and \ref{fig:tc-board-bottom}.
 
 In order to support the large number of TCs required in the capsule, a breakout board supporting 6 of the MCP9600T-E/MX series TC to digital converter was designed. This TC converter chip was selected due to its support for a wide variety of TC types (K, J, T, N, S, E, B and R)\footnote{\url{https://www.digikey.com/en/products/detail/microchip-technology/MCP96L00T-E-MX/9606988}}, as well as its chainable I$^2$C interface, allowing more sensing elements to connected with less wiring (similar SPI based conversion chips have a chip select line per chip that would restrict the number of pins available for other capsule functionality).
 
@@ -153,18 +161,39 @@ For pressure meausrement, Honeywell sensing solutions temperature compensated ab
 \label{tab:pressure-sensors}
 \end{table}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{images/amtps-temp-pressure-subsystem.png}
 	\caption{Functional decomposition of the TPMS.}
 	\label{fig:tpms-overview}
 \end{figure}
 
+Shown in Fig. \ref{fig:tpms-proto} is the assembled prototype of the TPMS breakout board that interfaces to the CDH board and the TC breakouts.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{images/tpms-breakout}
+	\caption{Assembled TPMS breakout board.}
+	\label{fig:tpms-proto}
+\end{figure}
+
+Shown in Fig. \ref{fig:tc-board-bottom} is the TC to digital breakout board, two of which will be used for a total of 12 TC channels.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=13cm]{images/tc-board-bottom}
+	\caption{Bottom of V1 Evaluation board for MCP9600 TC to digital converter}
+	\label{fig:tc-board-bottom}
+\end{figure}
+
 
 \subsection{Inertial Measurement}
-A breakout board for the H3LIS100DL~\footnote{\url{https://www.digikey.com/en/products/detail/stmicroelectronics/H3LIS100DL/7313278}} +/- 100g accelerometer has been designed to help in the evaluation of this IC as an effective way to measure acceleration loads on the capsule. The ADXL377 is another potential high-g 3-axis acceleromter~\footnote{\url{https://www.adafruit.com/product/1413}}, but has analog output and higher cost since it is currently only available in a pre-assembled breakout board.
+A breakout board for the H3LIS100DL~\footnote{\url{https://www.digikey.com/en/products/detail/stmicroelectronics/H3LIS100DL/7313278}} +/- 100g accelerometer has been designed to help in the evaluation of this IC as an effective way to measure acceleration loads on the capsule. In addition to a +/- 100g 3-axis accelerometer, a lower dynamic range 9 axis acceleromter+gyroscope chip will also be included (ICM-20949).
 
-In addition to a high-g 3-axis accelerometer, a lower dynamic range 6 axis acceleromter+gyroscope chip will also be included in the capsule (such as a ICM-20949 or MPU6050).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{images/imu-breakout}
+	\caption{Assembled IMU logger with ICM-20948 9-axis IMU and H3LIS100 3-axis 100g accelerometer.}
+	\label{fig:imu-breakout}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,7 +205,9 @@ Iridium modem to send GPS coordinates for recovery operations. University of Ken
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Parachute Deployment}
-Main parachute deployment will use a CO$_2$ cartridge puncture system which has a servo actuated trigger. Servo control signal pins are allotted on the main CDH processor and configured in software to trigger when necessary. Current plans to decide correct deployment time are to use capsule internal barometric pressure, possibly in combination with one of the external pressure sensors.
+There will be a main and drogue chute. Initial drogue chute deployment will be propelled by a CO$_2$ cartridge puncture system which has a servo actuated trigger. Servo control signal pins are allotted on the main CDH processor and configured in software to trigger when necessary. Release of the drogue chute will be facilitated by pyrotechnic cutters which will be triggered sometime after drogue chute deployment.
+
+Current plans to decide correct deployment time are to use capsule internal barometric pressure, possibly in combination with one of the external pressure sensors.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,24 +219,28 @@ On board non-volatile storage is required to log in-flight telemetry data for po
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Power}
-To power the capsule avionics, a lithium polymer battery will be used. Most likely a 2 cell (in series) with a high quality switching step down regulator to provide a 5 volt system bus. A single cell approach (with no 5v regulator) eases charging but might cause system electronics to be unreliable during low battery voltage scenarios. No matter what cell configuration is chosen, a battery protection IC will be used for added safety from shorts and battery depletion.
+To power the capsule avionics, a lithium polymer battery will be used. Since the flight will be very short (~10 minutes), a single 3000mAh LiPo cell is estimated to be sufficient. There is room to adjust this as the current consumption tests progress. A battery protection IC will be used for added safety from shorts and battery over-depletion.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Durability}
-Syntactic foam may be used. Consisting of glass microballoons with epoxy resin, it can encase electronics to protect from very high acceleration loads during ascent. Currently working with NASA JSC to get glass microballoons to UK for testing.
+Syntactic foam may be used. Consisting of glass microballoons with epoxy resin, it can encase electronics to protect from very high acceleration loads during ascent. Currently working with NASA JSC to get glass microballoons to UK for testing. 
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Subsystem Software}
+\section{Software}
 \label{sec:software}
 
 Capsule operation sequence is planned as follows:
 
+\subsection{Functionality}
+
 \begin{enumerate}
-	\item Low power state prior to launch
+	\item Low power state prior to launch (activation pins with nosecone)
 	\item Activate main operation loop upon separation from launch vehicle
 	\item Begin logging all telemetry to internal storage and periodically transmitting Iridium packets with position and velocity information for recovery operations
 	\item At a specified capsule internal barometric pressure, trigger the CO$_2$ release servo to release the drogue and main parachute.
@@ -213,7 +248,39 @@ Capsule operation sequence is planned as follows:
 
 Currently, verified functionalities include logging of accelerometer, pressure, thermocouple, and GPS data to internal storage. Next steps include adding sending of Iridium modem packets with current position and velocity as well as integrating the IMU logging functionality (currently waiting on parts to be delivered).
 
+\subsection{Versioning}
+
 Software for the capsule is under version control at \url{http://github.com/krups/amtps-fta-software}. This is a private repository; if anyone would like access, please send an email to matthew.ruffner@uky.edu with their Github username and they will be given access.
+
+Additionally, there will be checks in place to make sure the correct, flight-ready version of the code gets programmed onto the CDH, TMPS and IMU processor boards.
+
+\subsection{Testing}
+As the prototype build progresses and the software matures, functionality testing will be preformed to ensure all sensors are being logged as needed and that critical software triggers, such as using the barometer for parachute deployment, are functional.
+
+Other tests planned include software data acquisition tests to verify IMU, high g accelerometer and TC measurements are consistently acquired and logged.
+
+Thermocouple polarity and numbering will be verified by channel by heating to a fixed temperature with a known TC type and checking against logged measurement.
+
+Pressure sensor configuration will be tested by varying the pressure on each pressure sensor and verifying the logged pressure reading corresponds to the changed sensor.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Testing Plans}
+\label{sec:testplans}
+
+Test hardware has been assembled and is currently being used for software development. CAD models of capsule avionics have been integrated into the capsule mechanical CAD (with the exception of wiring) to verify physical fit. A mounting plate for all of the PCBs is under design and construction.
+
+\subsection{Recovery}
+Using a truck going at speed, a parachute test is planned, which will verify that the CO$_2$ cartridge release is functional and that the pyro charges are capable of releasing the drogue chute when needed. The results from this initial test will be used to calibrate the parachute ejecting routing timing to ensure drogue deployment at proper altitude and that the drogue is cut away after the correct amount of time.
+
+
+Iridium transmit test plans consist of making sure GPS coordinates are received over the iridium network.
+
+\subsection{Battery Life}
+Battery life tests will make sure current draw with no circuits active is zero, and also verify the functionality of the activation switches in starting the system up. Additionally, current consumption when operating a standard mission (GPS on, Iridium transmitting, all sensors recording) will be measured in order to get an idea of how long the capsule will stay powered on after separation. 
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,11 +292,11 @@ According the the most recent revision of the project outline, NASA has alotted 
 
 
 \subsection{Schedule}
-Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware over the later half of 2021. The project is current slightly ahead of schedule with subsystem testing occurring roughly a month earlier than expected.
+Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware moving into 2022, past the PDR in February.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{images/schedule.png}
-	\caption{Approximate schedule for completion of test hardware.}
+	\includegraphics[width=\textwidth]{images/schedule-22.png}
+	\caption{Approximate schedule for completion of prototype and final build.}
 	\label{fig:schedule}
 \end{figure}
 
@@ -342,55 +409,6 @@ Figures \ref{fig:schematic-imu-p1}, \ref{fig:schematic-imu-p2}, and \ref{fig:sch
 \end{figure}
 
 
-
-
-
-\section{Subsystem Testing}
-\label{appb}
-
-Testing hardware is assembled and is currently being used for software development. CAD models of capsule avionics have been integrated into the capsule mechanical CAD (with the exception of wiring) to verify physical fit.  
-
-\begin{figure}[h!]
-	\includegraphics[width=\textwidth]{images/subsystem-hardware.jpg}
-	\caption{Initial build of subsystem testing hardware. Shown here: Top right: 18 temperature and 5 channel TPM subsystem connected to main CDH subsystem (bottom right). SD card logging and GPS receiver and antenna also shown (top left). Bottom left: Iridium satellite modem.}
-	\label{fig:subsystem-hardware}
-\end{figure}
-
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{images/tc-board-bottom}
-	\caption{Bottom of V1 Evaluation board for MCP9600 TC to digital converter}
-	\label{fig:tc-board-bottom}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{images/tc-board-top}
-	\caption{Top of V1 Evaluation board for MCP9600 TC to digital converter}
-	\label{fig:tc-board-top}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{images/100g-accel-board}
-	\caption{High g accelerometer testing PCB.}
-	\label{fig:accel-board}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{images/pressure-sensor-testbed-annotated}
-	\caption{Testing setup for the pressure sensors.}
-	\label{fig:pressure-testbed}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{images/tvac-20210602-large.png}
-	\caption{Pressure readout from 5 Honeywell sensors over an 8 minute session in a thermal vacuum chamber. Not only were the Honeywell sensors all very close to each other, these values closely matched the pressure readout on the TVAC chamber.}
-	\label{fig:pressure-tvac}
-\end{figure}
 
 
 %\bibliographystyle{plain}
