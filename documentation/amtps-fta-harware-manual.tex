@@ -3,23 +3,29 @@
 
 \title{AMPTS FTA Avionics Design}
 \author{Matt Ruffner}
-\date{\today\\v1.2}
+\date{\today\\v1.3}
 
 
 \usepackage{url}
 \usepackage{array}
 \usepackage{float}
 \usepackage{natbib}
+\usepackage{titlesec}
+\usepackage{capt-of}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{fullpage}
 \usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{pdflscape}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
 }
+
+\newcolumntype{L}{>{\centering\arraybackslash}m{2cm}}
 
 \newcommand{\ddrev}{E}
 
@@ -199,7 +205,7 @@ A breakout board for the H3LIS100DL~\footnote{\url{https://www.digikey.com/en/pr
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Telemetry}
 
-Iridium modem to send GPS coordinates for recovery operations. University of Kentucky has an Iridium modem available to use, with an account providing message credits. Discussion on the use of this modem is yet to have happened. Additional vehicle-to-ground telemetry would be reassuring as the Iridium network can be unreliable for short periods of time. It is unclear whether this would be achievable with a COTS radio link (such as XBee or LORA) that would not require FCC certification. This requires coordination with launch site for tracking with a directional antenna and other hardware setup. The appeal of the Iridium is we get an email with the GPS coordinates of the capsule and we can tell the recovery crew the location of the capsule from anywhere. 
+Iridium modem to send GPS coordinates for recovery operations. University of Kentucky has purchased an Iridium modem for use in this project and has an account providing message credits. Additional vehicle-to-ground telemetry would be reassuring as the Iridium network can be unreliable for short periods of time. It is unclear whether this would be achievable with a COTS radio link (such as XBee or LORA) that would not require FCC certification. This requires coordination with launch site for tracking with a directional antenna and other hardware setup. The appeal of the Iridium is we get an email with the GPS coordinates of the capsule and we can tell the recovery crew the location of the capsule from anywhere. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -207,14 +213,18 @@ Iridium modem to send GPS coordinates for recovery operations. University of Ken
 \subsection{Parachute Deployment}
 There will be a main and drogue chute. Initial drogue chute deployment will be propelled by a CO$_2$ cartridge puncture system which has a servo actuated trigger. Servo control signal pins are allotted on the main CDH processor and configured in software to trigger when necessary. Release of the drogue chute will be facilitated by pyrotechnic cutters which will be triggered sometime after drogue chute deployment.
 
+The software to trigger the drogue based on barometric pressure is functional. There is a necessary calibration step where, once at white sands, the pressure at ground level would be programmed into the capsule via the wireless debug interface.
+
 Current plans to decide correct deployment time are to use capsule internal barometric pressure, possibly in combination with one of the external pressure sensors.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Storage}
-On board non-volatile storage is required to log in-flight telemetry data for post processing. Due to the high vibrational loads expected during launch, an SD card might be unreliable (spring loaded contacts could separate from card). For this reason, solid state flash integrated circuits are being explored that can store just as much information as an SD card. Exporting logged data from the capsule would then be done via cabled connection to a computer after capsule recovery.
+On board non-volatile storage is required to log in-flight telemetry data for post processing. Due to the high vibrational loads expected during launch, an SD card might be unreliable (spring loaded contacts could separate from card). The limited availability of solid state flash has made this option infeasible. Instead, files can be retrieved from the IMU and main CDH board via serial connection to the computer. This way, the SD card can be permanently affixed to the board, and access to files can be achieved by connecting a cable to the avionics after recovery.
 
+\subsection{Javad GPS}
+Currently we are testing with a GPS that has COCOM limits in place. A Javad GPS module is being acquired which will have these limits removed and be able to provide GPS tracking data at high altitudes and velocities. The interface to the Javad card is the same as that of the testing GPS (power supply and two serial UART interface). For this reason, work to integrate this newer Javad card is expected to be minimal since mounting positions for it have already been designed into the capsule CAD.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -246,11 +256,15 @@ Capsule operation sequence is planned as follows:
 	\item At a specified capsule internal barometric pressure, trigger the CO$_2$ release servo to release the drogue and main parachute.
 \end{enumerate}
 
-Currently, verified functionalities include logging of accelerometer, pressure, thermocouple, and GPS data to internal storage. Next steps include adding sending of Iridium modem packets with current position and velocity as well as integrating the IMU logging functionality (currently waiting on parts to be delivered).
+Currently, verified functionalities include logging of accelerometer, pressure, thermocouple, and GPS data to internal storage (GPS has been verified with a testing GPS unit which uses a similar wiring connection and output data format).
+
+The software to test sending of Iridium modem packets is 90\% done and wont be able to be fully tested until the Javad GPS unit is integrated, since the Iridium packets are intended to have GPS coordinates and capsule velocity. IMU logging has also been verified, with both the +/-100g 3 axis sensor and +/-16g and +/-2000 deg/s gyroscope reading back good data from the recovery serial interface.
+
+A separate document on software design is probably in order...
 
 \subsection{Versioning}
 
-Software for the capsule is under version control at \url{http://github.com/krups/amtps-fta-software}. This is a private repository; if anyone would like access, please send an email to matthew.ruffner@uky.edu with their Github username and they will be given access.
+Software for the capsule is under version control at \url{http://github.com/krups/amtps-fta-software}. Hardware design files and the source to this document are under version control at \url{http://github.com/krups/amtps-fta-hardware}. These are a private repository; if anyone would like access, please send an email to matthew.ruffner@uky.edu with their Github username and they will be considered for access.
 
 Additionally, there will be checks in place to make sure the correct, flight-ready version of the code gets programmed onto the CDH, TMPS and IMU processor boards.
 
@@ -263,6 +277,8 @@ Thermocouple polarity and numbering will be verified by channel by heating to a 
 
 Pressure sensor configuration will be tested by varying the pressure on each pressure sensor and verifying the logged pressure reading corresponds to the changed sensor.
 
+See Appendix \ref{appendix-testing} for a test matrix.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -274,8 +290,8 @@ Test hardware has been assembled and is currently being used for software develo
 \subsection{Recovery}
 Using a truck going at speed, a parachute test is planned, which will verify that the CO$_2$ cartridge release is functional and that the pyro charges are capable of releasing the drogue chute when needed. The results from this initial test will be used to calibrate the parachute ejecting routing timing to ensure drogue deployment at proper altitude and that the drogue is cut away after the correct amount of time.
 
+The wireless interface to the capsule will be used in combination with a small groundstation to control the capsule and trigger the cartridge release (simulating a barometric pressure threshold crossing).
 
-Iridium transmit test plans consist of making sure GPS coordinates are received over the iridium network.
 
 \subsection{Battery Life}
 Battery life tests will make sure current draw with no circuits active is zero, and also verify the functionality of the activation switches in starting the system up. Additionally, current consumption when operating a standard mission (GPS on, Iridium transmitting, all sensors recording) will be measured in order to get an idea of how long the capsule will stay powered on after separation. 
@@ -292,14 +308,9 @@ According the the most recent revision of the project outline, NASA has alotted 
 
 
 \subsection{Schedule}
-Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware moving into 2022, past the PDR in February.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{images/schedule-22.png}
-	\caption{Approximate schedule for completion of prototype and final build.}
-	\label{fig:schedule}
-\end{figure}
+Figure \ref{fig:schedule} shows an approximate schedule for assembly and evaluation of test hardware moving into 2022, past the PDR in February. Please see Appendix \ref{app-schedule} for the Gantt chart.
 
+The following list provides a system level breakdown of the items in the Gannt chart
 
 
 
@@ -410,6 +421,104 @@ Figures \ref{fig:schematic-imu-p1}, \ref{fig:schematic-imu-p2}, and \ref{fig:sch
 
 
 
+\newgeometry{margin=2cm} % modify this if you need even more space
+\begin{landscape}
+\section{Test Matrix}
+\label{appendix-testing}
+\begin{table}[!bp]
+	\centering
+		%\begin{minipage}{0.95\textheight}
+			\def\arraystretch{1.75}
+			\small\centering
+			\setlength{\tabcolsep}{1.0mm}
+			\scriptsize
+			\centering
+			\caption{Test matrix for avionics integration verifications}
+			\label{my-label}  
+			
+			\begin{table}[H]
+				\scriptsize
+				\begin{tabular}{p{3cm} | p{13cm}  L p{5cm}}
+					\textbf{Test Name} &\textbf{ Description, verification or procedure}& \textbf{ ECD / Progress} & \textbf{Problems/Notes} \\
+					\hline
+					IMU accuracy test &  Verify recorded axes orientation for all acceleration and inertial sensors matches documentation and that data received over the recovery data interfaces looks reasonable. &  Done &  \\
+					
+					Javad GPS testing & Verify that the CDH processor is communicating with the GPS card and that logging of RTK data is happening & TBD & Javad will require a 5v boost circuit from the 4.2v system battery, these are already acquired and ready to use \\
+					
+					Iridium packet test & Verify that Irdium packets are transmitted starting when GPS signal is acquired and that they contain valid GPS fixes and velocities read from the sensor. & 3/8/22 & Depends on Javad GPS arrival time \\
+					
+					TPMS accuracy testing & activate the avionics in multiple trials and heat the thermocouples to varying and known temperatures (i.e. with a soldering iron set to different temperatures, verify with external TC). Verify by comparing to log file and make sure TC's are reporting valid and consistent temperatures. Make sure temperatures across trials are consistent. & 3/8/22 & \\
+					
+					CDH: wireless configuration & ensure that the ISM band radio in the capsule can be used for last minute verification of functionality and configuration & 3/21/22 & Testing will be concurrent with all software development and evaluation \\
+					
+					Power consumption test & Measure current draw of system for various operational states including all sensors on and logging (including GPS) with Iridium transmitting as well as a full power save mode (possibly to be used after detection of impact) & 3/21/22 & Need a current measuring probe for tektronix oscilloscope \\
+					
+					Last minute charging & Provision a wired connector through one of the three holes in the backshell so that the device may be charged or just operated on auxiliary power (not using batteries) for final configuration and checks. & 3/14/22 & Depends on power consumption test \\
+					
+					Run out of power test & Ensure that logfiles stay intact if the device were to drain itself of power after touchdown. Verify that the connector does indeed charge the batteries. & 3/8/22 & A shutdown could be implemented so that if mission time is greater than 20 minutes or the GPS velocity is less than some threshold, the system goes into a low power state. \\
+					
+					Physical fit test & Ensure all components will fit in alotted space in capsule & Done & \\
+					
+					Integration test & Using a plastic mock-up of the forebody, verify that the mounting plates/standoffs/bolts etc. allow for the avionics to be properly mounted.  & 2/21/22 \\
+					
+					CO$_2$ Ejection test & Ensure reliability of release servo interface to CDH processor by repeatedly triggering the servo and observing it works. & 3/1/22 &  Need to ensure running tasks such as SD logging and sensor acquisition do not interfere with the timing of the servo library and allow for repeatable and consistent servo control. A dedicated servo board may be necessary if this is a problem. \\
+					
+					Pyro cutter test & Using two pyro cutters, like will be used in the mission, pull tension on parachute cords indicative of the tension expected once the drogue is deployed, and fire them using test software. & 3/7/22 & Pyro cutter lead time and cost. Need to make sure this goes right the first time. \\
+					
+					Paracute truck test & At speed of 30-40 mph, release the parachute from the dummy capsule after integration test and Co$_2$ ejection test to verify that the drogue comes out as planned. Assuming the drogue comes out as planned, allow for manual triggering of the pyro cutters to verify that the drogue is cut loose. & 3/14/2022 & Dependent on pyro cutter test and CO$_2$ test \\
+					
+					
+					
+					
+					
+				\end{tabular}
+			\end{table}
+	%\end{minipage}
+\end{table}
+\end{landscape}
+\restoregeometry
+
+
+\newgeometry{margin=2cm} % modify this if you need even more space
+\begin{landscape}
+\section{Project Schedule Gantt 2022}
+The schedule shown in Fig. \ref{fig:schedule22} shows the 2022 schedule for the capsule avionics. A general breakdown of work in the Gantt is as follows:
+
+\begin{itemize}
+	\item Test hardware: the CDH, TPMS and IMU boards have been assembled and preliminarily tested with bare-bones software to ensure solder connections and schematic designs are functional.
+	\item Software development is ongoing.
+	\item Test hardware evaluation is also ongoing. This is a big task that involves verifying the wireless debug interface to the capsule, the accuracy of the TC measurements through testing, and the ability of the CDH to reliably trigger the CO$_2$ servo and pyro cutters, as well as Javad GPS integration and Iridium modem testing. Parts of this have been independently verified, for example, sending Iridium packets with GPS information is functional, but that's with a testing GPS and not the same as testing when the Javad GPS is attached for various technical reasons.
+	\item This is in progress. John has designs for mounting plates for the hardware. The mounting hardware is being acquired at the time of writing and test integration is in progress on the plastic forebody mockup.
+	\item Refinement. This was a backup task in case the test hardware wasn't functional. This allows provisioning for a external servo trigger and power booster for the Javad GPS.
+\end{itemize}
+
+\label{app-schedule-22}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.25\textwidth]{images/schedule-22.png}
+	\caption{Approximate schedule for completion of prototype and final build.}
+	\label{fig:schedule22}
+\end{figure}
+
+\end{landscape}
+\restoregeometry
+
+
+
+
+\newgeometry{margin=2cm} % modify this if you need even more space
+\begin{landscape}
+\section{Project Schedule Gantt 2021}
+\label{app-schedule-21}
+This schedule in Fig. \ref{fig:schedule} shows that the project schedule for 2021. The avionics design and assembly process went well and was on schedule moving into 2022.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.25\textwidth]{images/schedule.png}
+	\caption{Approximate schedule for completion of prototype and final build.}
+	\label{fig:schedule}
+\end{figure}
+\end{landscape}
+\restoregeometry
 
 %\bibliographystyle{plain}
 %\bibliography{references}
